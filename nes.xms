@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<object type="traktor.sb.Solution" version="5">
+	<name>nes</name>
+	<rootPath>build</rootPath>
+	<aggregateOutputPath/>
+	<projects>
+		<item type="traktor.sb.Project" version="1">
+			<enable>true</enable>
+			<name>nes</name>
+			<sourcePath>code</sourcePath>
+			<configurations>
+				<item type="traktor.sb.Configuration" version="5">
+					<name>DebugStatic</name>
+					<targetFormat>TfExecutableConsole</targetFormat>
+					<targetProfile>TpDebug</targetProfile>
+					<precompiledHeader/>
+					<includePaths>
+						<item>code/components/nofrendo</item>
+						<item>code/components/nofrendo/libsnss</item>
+						<item>code/components/nofrendo/nes</item>
+						<item>code/components/nofrendo/sndhrdw</item>
+						<item>code/components/nofrendo/cpu</item>
+						<item>code/components/nofrendo-rd</item>
+					</includePaths>
+					<definitions>
+						<item>_DEBUG</item>
+						<item>__RV__</item>
+					</definitions>
+					<libraryPaths/>
+					<libraries/>
+					<warningLevel>WlCompilerDefault</warningLevel>
+					<additionalCompilerOptions/>
+					<additionalLinkerOptions>-T$(MAKE_HOME)/Link.ld</additionalLinkerOptions>
+					<debugExecutable/>
+					<debugArguments/>
+					<debugEnvironment/>
+					<debugWorkingDirectory/>
+					<aggregationItems/>
+					<consumerLibraryPath/>
+				</item>
+				<item type="traktor.sb.Configuration" version="5">
+					<name>ReleaseStatic</name>
+					<targetFormat>TfExecutableConsole</targetFormat>
+					<targetProfile>TpRelease</targetProfile>
+					<precompiledHeader/>
+					<includePaths>
+						<item>code/components/nofrendo</item>
+						<item>code/components/nofrendo/libsnss</item>
+						<item>code/components/nofrendo/nes</item>
+						<item>code/components/nofrendo/sndhrdw</item>
+						<item>code/components/nofrendo/cpu</item>
+						<item>code/components/nofrendo-rd</item>
+					</includePaths>
+					<definitions>
+						<item>NDEBUG</item>
+						<item>__RV__</item>
+					</definitions>
+					<libraryPaths/>
+					<libraries/>
+					<warningLevel>WlCompilerDefault</warningLevel>
+					<additionalCompilerOptions/>
+					<additionalLinkerOptions>-T$(MAKE_HOME)/Link.ld</additionalLinkerOptions>
+					<debugExecutable/>
+					<debugArguments/>
+					<debugEnvironment/>
+					<debugWorkingDirectory/>
+					<aggregationItems/>
+					<consumerLibraryPath/>
+				</item>
+			</configurations>
+			<items>
+				<item type="traktor.sb.Filter">
+					<name>components</name>
+					<items>
+						<item type="traktor.sb.Filter">
+							<name>nofrendo</name>
+							<items>
+								<item type="traktor.sb.Filter">
+									<name>cpu</name>
+									<items>
+										<item type="traktor.sb.File" version="1">
+											<fileName>components/nofrendo/cpu/*.c</fileName>
+											<excludeFilter/>
+											<items/>
+										</item>
+										<item type="traktor.sb.File" version="1">
+											<fileName>components/nofrendo/cpu/*.h</fileName>
+											<excludeFilter/>
+											<items/>
+										</item>
+									</items>
+								</item>
+								<item type="traktor.sb.Filter">
+									<name>libsnss</name>
+									<items>
+										<item type="traktor.sb.File" version="1">
+											<fileName>components/nofrendo/libsnss/*.c</fileName>
+											<excludeFilter/>
+											<items/>
+										</item>
+										<item type="traktor.sb.File" version="1">
+											<fileName>components/nofrendo/libsnss/*.h</fileName>
+											<excludeFilter/>
+											<items/>
+										</item>
+									</items>
+								</item>
+								<item type="traktor.sb.Filter">
+									<name>mappers</name>
+									<items>
+										<item type="traktor.sb.File" version="1">
+											<fileName>components/nofrendo/mappers/*.c</fileName>
+											<excludeFilter/>
+											<items/>
+										</item>
+										<item type="traktor.sb.File" version="1">
+											<fileName>components/nofrendo/mappers/*.h</fileName>
+											<excludeFilter/>
+											<items/>
+										</item>
+									</items>
+								</item>
+								<item type="traktor.sb.Filter">
+									<name>nes</name>
+									<items>
+										<item type="traktor.sb.File" version="1">
+											<fileName>components/nofrendo/nes/*.c</fileName>
+											<excludeFilter/>
+											<items/>
+										</item>
+										<item type="traktor.sb.File" version="1">
+											<fileName>components/nofrendo/nes/*.h</fileName>
+											<excludeFilter/>
+											<items/>
+										</item>
+									</items>
+								</item>
+								<item type="traktor.sb.Filter">
+									<name>sndhrdw</name>
+									<items>
+										<item type="traktor.sb.File" version="1">
+											<fileName>components/nofrendo/sndhrdw/*.c</fileName>
+											<excludeFilter/>
+											<items/>
+										</item>
+										<item type="traktor.sb.File" version="1">
+											<fileName>components/nofrendo/sndhrdw/*.h</fileName>
+											<excludeFilter/>
+											<items/>
+										</item>
+									</items>
+								</item>
+								<item type="traktor.sb.File" version="1">
+									<fileName>components/nofrendo/*.c</fileName>
+									<excludeFilter/>
+									<items/>
+								</item>
+								<item type="traktor.sb.File" version="1">
+									<fileName>components/nofrendo/*.h</fileName>
+									<excludeFilter/>
+									<items/>
+								</item>
+							</items>
+						</item>
+						<item type="traktor.sb.Filter">
+							<name>nofrendo-rd</name>
+							<items>
+								<item type="traktor.sb.File" version="1">
+									<fileName>components/nofrendo-rd/*.c</fileName>
+									<excludeFilter/>
+									<items/>
+								</item>
+								<item type="traktor.sb.File" version="1">
+									<fileName>components/nofrendo-rd/*.h</fileName>
+									<excludeFilter/>
+									<items/>
+								</item>
+							</items>
+						</item>
+					</items>
+				</item>
+				<item type="traktor.sb.Filter">
+					<name>main</name>
+					<items>
+						<item type="traktor.sb.File" version="1">
+							<fileName>main/*.c</fileName>
+							<excludeFilter/>
+							<items/>
+						</item>
+					</items>
+				</item>
+			</items>
+			<dependencies>
+				<item type="traktor.sb.ExternalDependency" version="3">
+					<inheritIncludePaths>true</inheritIncludePaths>
+					<link>LnkYes</link>
+					<solutionFileName>../retrodack/retrodack-rv.xms</solutionFileName>
+					<projectName>Runtime</projectName>
+				</item>
+			</dependencies>
+		</item>
+	</projects>
+</object>

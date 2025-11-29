@@ -1,0 +1,95 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+ 		{
+			"name": "... Emulator HL",
+			"request": "launch",
+			"type": "cppdbg",
+			"program": "${workspaceRoot}/../retrodack/build/linux/ReleaseStatic/RetroDACK.Emulator",
+			"args": [
+				"--hl",
+				"--gdb"
+			],
+			"stopAtEntry": false,
+			"cwd": "${workspaceRoot}",
+			"environment": [],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			],
+		},
+
+		{
+			"name": "... Emulator GL",
+			"request": "launch",
+			"type": "cppdbg",
+			"program": "${workspaceRoot}/../retrodack/build/linux/ReleaseStatic/RetroDACK.Emulator",
+			"args": [
+				"--gl",
+				"--gdb"
+			],
+			"stopAtEntry": false,
+			"cwd": "${workspaceRoot}",
+			"environment": [],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			],
+		},
+        
+		{
+			"type": "gdb",
+			"request": "attach",
+			"name": "... RV NES (Debug)",
+			"executable": "${workspaceRoot}/build/DebugStatic/nes",
+			"target": ":12345",
+			"remote": true,
+			"cwd": "${workspaceRoot}",
+			"gdbpath": "/opt/riscv/bin/riscv32-unknown-elf-gdb",
+			"autorun": [
+				"load"
+			]
+		},
+		{
+			"type": "gdb",
+			"request": "attach",
+			"name": "... RV NES (Release)",
+			"executable": "${workspaceRoot}/build/ReleaseStatic/nes",
+			"target": ":12345",
+			"remote": true,
+			"cwd": "${workspaceRoot}",
+			"gdbpath": "/opt/riscv/bin/riscv32-unknown-elf-gdb",
+			"autorun": [
+				"load"
+			]
+		},
+    ],
+    "compounds": [
+        {
+            "name": "NES (Debug)",
+            "configurations": [
+                "... Emulator HL",
+                "... RV NES (Debug)"
+            ],
+            "stopAll": true
+        },
+        {
+            "name": "NES (Release)",
+            "configurations": [
+                "... Emulator HL",
+                "... RV NES (Release)"
+            ],
+            "stopAll": true
+        }
+    ]
+}

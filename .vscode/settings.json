@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "*.run": "lua",
+        "noftypes.h": "c",
+        "stdint.h": "c",
+        "math.h": "c",
+        "string.h": "c",
+        "algorithm": "c"
+    }
+}
