@@ -163,9 +163,9 @@ static void clear(uint8 color);
 static bitmap_t *lock_write(void);
 static void free_write(int num_dirties, rect_t *dirty_rects);
 static void custom_blit(bitmap_t *bmp, int num_dirties, rect_t *dirty_rects);
-static char fb[256 * 256]; //dummy
 
-// QueueHandle_t vidQueue;
+static uint8_t* frameBuffer[2];
+bitmap_t *myBitmap;
 
 viddriver_t sdlDriver =
 {
@@ -180,9 +180,6 @@ viddriver_t sdlDriver =
    custom_blit,   /* custom_blit */
    false          /* invalidate flag */
 };
-
-
-bitmap_t *myBitmap;
 
 void osd_getvideoinfo(vidinfo_t *info)
 {
@@ -199,11 +196,24 @@ void osd_togglefullscreen(int code)
 /* initialise video */
 static int init(int width, int height)
 {
+	frameBuffer[0] = rt_video_create_target();
+	frameBuffer[1] = rt_video_create_target();
+
+	memset(frameBuffer[0], 0, rt_video_get_resolution_width() * rt_video_get_resolution_height());
+	memset(frameBuffer[1], 0, rt_video_get_resolution_width() * rt_video_get_resolution_height());
+
+	myBitmap = bmp_createhw(
+		frameBuffer[0],
+		DEFAULT_WIDTH,
+		256,
+		rt_video_get_resolution_width()
+	);
 	return 0;
 }
 
 static void shutdown(void)
 {
+   bmp_destroy(&myBitmap);
 }
 
 /* set a video mode */
@@ -246,45 +256,35 @@ static void clear(uint8 color)
 /* acquire the directbuffer for writing */
 static bitmap_t *lock_write(void)
 {
-//   SDL_LockSurface(mySurface);
-   myBitmap = bmp_createhw((uint8*)fb, DEFAULT_WIDTH, /*DEFAULT_HEIGHT*/256, DEFAULT_WIDTH);
-   return myBitmap;
+	return myBitmap;
 }
 
 /* release the resource */
 static void free_write(int num_dirties, rect_t *dirty_rects)
 {
-   bmp_destroy(&myBitmap);
 }
 
 
 static void custom_blit(bitmap_t *bmp, int num_dirties, rect_t *dirty_rects)
 {
-	uint8_t* dst = rt_video_get_secondary_target();
+	rt_video_wait();
+	rt_video_present(0);
 
-	for (int y = 0; y < DEFAULT_HEIGHT; ++y)
+	if (bmp->data == frameBuffer[0])
 	{
-		memcpy(dst, bmp->line[y], DEFAULT_WIDTH);
-		dst += 360;
+		rt_video_blit(frameBuffer[0]);
+		bmp->data = frameBuffer[1];
+	}
+	else
+	{
+		rt_video_blit(frameBuffer[1]);
+		bmp->data = frameBuffer[0];
 	}
 
-	rt_video_present(0);
+	bmp->line[0] = bmp->data;
+	for (int i = 1; i < bmp->height; i++)
+		bmp->line[i] = bmp->line[i - 1] + bmp->pitch;
 }
-
-
-//This runs on core 1.
-// static void videoTask(void *arg) {
-// 	int x, y;
-// 	bitmap_t *bmp=NULL;
-// 	x = (320-DEFAULT_WIDTH)/2;
-//     y = ((240-DEFAULT_HEIGHT)/2);
-//     while(1) {
-// //		xQueueReceive(vidQueue, &bmp, portMAX_DELAY);//skip one frame to drop to 30
-// 		xQueueReceive(vidQueue, &bmp, portMAX_DELAY);
-// 		ili9341_write_frame(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT, (const uint8_t **)bmp->line);
-// 	}
-// }
-
 
 /*
 ** Input

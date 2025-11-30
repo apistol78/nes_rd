@@ -348,7 +348,7 @@ static void system_video(bool draw)
 //            0, 0, NES_SCREEN_WIDTH, NES_VISIBLE_HEIGHT);
 
    /* overlay our GUI on top of it */
-   gui_frame(true);
+   // gui_frame(true);
 
    /* blit to screen */
    vid_flush();
@@ -370,42 +370,49 @@ void nes_emulate(void)
    nes.fiq_cycles = (int) NES_FIQ_PERIOD;
 
 
-   int32_t ms = rt_timer_get_ms();
    while (false == nes.poweroff)
    {
    
-      if (nofrendo_ticks != last_ticks)
-      {
-         int tick_diff = nofrendo_ticks - last_ticks;
+      // if (nofrendo_ticks != last_ticks)
+      // {
+      //    int tick_diff = nofrendo_ticks - last_ticks;
 
-         frames_to_render += tick_diff;
-         gui_tick(tick_diff);
-         last_ticks = nofrendo_ticks;
-      }
+      //    frames_to_render += tick_diff;
+      //    gui_tick(tick_diff);
+      //    last_ticks = nofrendo_ticks;
+      // }
 
-      if (true == nes.pause)
-      {
-         /* TODO: dim the screen, and pause/silence the apu */
-         system_video(true);
-         frames_to_render = 0;
-      }
-      else if (frames_to_render > 1)
-      {
-         frames_to_render--;
-         nes_renderframe(false);
-         system_video(false);
-      }
-      else if ((1 == frames_to_render && true == nes.autoframeskip)
-               || false == nes.autoframeskip)
-      {
-         frames_to_render = 0;
-         nes_renderframe(true);
-         system_video(true);
-      }
+      // if (true == nes.pause)
+      // {
+      //    /* TODO: dim the screen, and pause/silence the apu */
+      //    system_video(true);
+      //    frames_to_render = 0;
+      // }
+      // else if (frames_to_render > 1)
+      // {
+      //    frames_to_render--;
+      //    nes_renderframe(false);
+      //    system_video(false);
+      // }
+      // else if ((1 == frames_to_render && true == nes.autoframeskip)
+      //          || false == nes.autoframeskip)
+      // {
+      //    frames_to_render = 0;
+      //    nes_renderframe(true);
+      //    system_video(true);
+      // }
+
+      int32_t ms1 = rt_timer_get_ms();
+
+      nes_renderframe(true);
 
       int32_t ms2 = rt_timer_get_ms();
-      printf("%d (%d): %d\n", nofrendo_ticks, frames_to_render, ms2 - ms);
-      ms = ms2;
+
+      system_video(true);
+
+      int32_t ms3 = rt_timer_get_ms();
+
+      printf("%d : %d %d\n", nofrendo_ticks, ms2 - ms1, ms3 - ms2);
    }
 }
 

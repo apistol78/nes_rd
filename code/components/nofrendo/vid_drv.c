@@ -373,9 +373,11 @@ int vid_setmode(int width, int height)
    printf("vid_setmode %d, %d\n", width, height);
 
    // #AP
-   primary_buffer = bmp_create(width, 240/*height*/, 0); /* no overdraw */
-   if (NULL == primary_buffer)
-      return -1;
+   // primary_buffer = bmp_create(width, 240/*height*/, 0); /* no overdraw */
+   // if (NULL == primary_buffer)
+   //    return -1;
+
+   primary_buffer = driver->lock_write();
 
    /* Create our backbuffer */
 #if 0
